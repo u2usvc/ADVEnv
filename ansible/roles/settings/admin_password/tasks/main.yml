@@ -1,0 +1,18 @@
+- name: Wait for MWs to become available
+  wait_for_connection:
+    delay: 10
+    timeout: 600
+
+- name: Manually gather facts
+  ansible.builtin.setup:
+  register: setup_result
+
+# note that the task will fail regardless if ansible_user's 
+# password is being changed
+- name: Ensure that Admin is present with a valid password
+  win_user:
+    name: Administrator
+    password: "{{local_admin_password}}"
+    password_never_expires: yes
+    account_disabled: false
+    state: present

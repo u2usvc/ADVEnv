@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+  <settings pass="oobeSystem">
+    <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+    <!-- https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-security-spp-ux -->
+      <SkipAutoActivation>true</SkipAutoActivation>
+    </component>
+
+    <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-IE-ESC" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+    <!-- https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-ie-esc -->
+      <IEHardenAdmin>false</IEHardenAdmin>
+      <IEHardenUser>true</IEHardenUser>
+    </component>
+    <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-OutOfBoxExperience" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+    <!-- https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-outofboxexperience -->
+      <DoNotOpenInitialConfigurationTasksAtLogon>true</DoNotOpenInitialConfigurationTasksAtLogon>
+    </component>
+    <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-ServerManager-SvrMgrNc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+    <!-- https://docs.microsoft.com/en-us/windows-hardware/customize/desktop/unattend/microsoft-windows-servermanager-svrmgrnc -->
+      <DoNotOpenServerManagerAtLogon>true</DoNotOpenServerManagerAtLogon>
+    </component>
+
+    <component name="Microsoft-Windows-Shell-Setup" 
+      processorArchitecture="amd64" 
+      publicKeyToken="31bf3856ad364e35" 
+      language="neutral" 
+      versionScope="nonSxS" 
+      xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <ComputerName>packer-win2022</ComputerName>
+    <TimeZone>Romance Standard Time</TimeZone>
+    <RegisteredOrganization>Packer</RegisteredOrganization>
+    <RegisteredOwner>Packer</RegisteredOwner>
+    <OOBE>
+      <HideEULAPage>true</HideEULAPage>
+      <HideLocalAccountScreen>true</HideLocalAccountScreen>
+      <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+      <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+      <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+      <NetworkLocation>Home</NetworkLocation>
+      <ProtectYourPC>1</ProtectYourPC>
+    </OOBE>
+    <UserAccounts>
+      <AdministratorPassword>
+        <Value>packer</Value>
+        <PlainText>true</PlainText>
+      </AdministratorPassword>
+      <LocalAccounts>
+        <LocalAccount wcm:action="add">
+          <Password>
+            <Value>packerpass</Value>
+            <PlainText>true</PlainText>
+          </Password>
+          <Description>packer user</Description>
+          <DisplayName>packer</DisplayName>
+          <Group>administrators</Group>
+          <Name>packer</Name>
+        </LocalAccount>
+      </LocalAccounts>
+    </UserAccounts>
+    <AutoLogon>
+      <Username>Administrator</Username>
+      <Password>
+        <Value>packer</Value>
+        <PlainText>true</PlainText>
+      </Password>
+      <Enabled>true</Enabled>
+      <LogonCount>1</LogonCount>
+    </AutoLogon>
+    <FirstLogonCommands>
+      <SynchronousCommand wcm:action="add">
+        <CommandLine>%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -Command C:\fix-winrm.ps1</CommandLine>
+        <Description>fix WinRM</Description>
+        <Order>2</Order>
+        <RequiresUserInput>true</RequiresUserInput>
+      </SynchronousCommand>
+    </FirstLogonCommands>
+  </component>
+  </settings>
+</unattend>
+

@@ -1,0 +1,65 @@
+{
+  "hosts" : {
+    "dc01" : {
+      "hostname" : "WIN-DC1",
+      "type" : "dc",
+      "local_admin_password": "1Dc01-P@$swd",
+      "domain" : "contoso.local",
+      "path" : "DC=contoso,DC=local"
+    },
+    "dc02" : {
+      "hostname" : "WIN-DC2",
+      "type" : "dc",
+      "local_admin_password": "2Dc02-P@$swd",
+      "domain" : "sales.contoso.local",
+      "path" : "DC=sales,DC=contoso,DC=local"
+    },
+    "dc03" : {
+      "hostname" : "WIN-DC3",
+      "type" : "dc",
+      "local_admin_password": "3Dc03-P@$swd",
+      "domain" : "ext.local",
+      "path" : "DC=ext,DC=local"
+    },
+    "mw01": {
+      "hostname": "DESKTOP-MW1",
+      "type": "mw",
+      "local_admin_password": "1Mw01-P@$swd",
+      "domain" : "sales.contoso.local",
+      "path" : "DC=sales,DC=contoso,DC=local"
+    },
+    "mw02": {
+      "hostname": "DESKTOP-MW2",
+      "type": "mw",
+      "local_admin_password": "2Mw02-P@$swd",
+      "domain" : "ext.local",
+      "path" : "DC=ext,DC=local"
+    }
+  },
+
+
+  "domains" : {
+    "ext.local" : {
+      "dc": "dc03",
+      "domain_password" : "3Dc03-P@$swd",
+      "netbios_name": "EXT",
+      "ca_server": "Braavos",
+      "trust" : "contoso.local",
+      "laps_path": "OU=Laps,DC=ext,DC=local"
+    },
+    "sales.contoso.local" : {
+      "dc": "dc02",
+      "domain_password" : "2Dc02-P@$swd",
+      "netbios_name": "SALES",
+      "trust" : "",
+      "laps_path": "OU=Laps,DC=sales,DC=contoso,DC=local"
+    },
+    "contoso.local" : {
+      "dc": "dc01",
+      "domain_password" : "1Dc01-P@$swd",
+      "netbios_name": "CONTOSO",
+      "trust" : "ext.local",
+      "laps_path": "OU=Laps,DC=contoso,DC=local"
+    }
+  }
+}

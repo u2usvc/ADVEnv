@@ -1,0 +1,18 @@
+- name: Child DC AD configuration
+  hosts: child_dc
+  roles:
+    - child_domain
+  vars_files:
+    - ./config.json
+  vars:
+    domain: "{{hosts[dict_key].domain}}"
+    domain_password: "{{domains[domain].domain_password}}"
+    netbios_name: "{{domains[domain].netbios_name}}"
+    parent_domain: "{{'.'.join(domain.split('.')[1:])}}"
+    parent_domain_user: "{{admin_user}}@{{parent_domain}}"
+    parent_domain_password: "{{domains[parent_domain].domain_password}}"
+    source_dc: "{{hosts[domains[parent_domain].dc].hostname}}.{{parent_domain}}"
+    zone_name: "{{parent_domain}}"
+    remote_dc: "{{domains[parent_domain].dc}}"
+    master_server: "{{hostvars[remote_dc].ansible_host}}"
+    replication: "none"

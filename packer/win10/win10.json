@@ -1,0 +1,70 @@
+{
+  "variables": {
+    "accelerator": "kvm",
+    "autounattend": "./scripts/bios/autounattend.xml",
+    "cpus": "4",
+    "disk_size": "61440",
+    "headless": "true",
+    "iso_checksum": "743fc483bb8bf1901c0534a0ae15208a5a72a3c5",
+    "iso_checksum_type": "sha1",
+    "iso_url": "https://software-download.microsoft.com/download/pr/18362.30.190401-1528.19h1_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
+    "memory_size": "4096",
+    "shutdown_command": "%WINDIR%/system32/sysprep/sysprep.exe /generalize /oobe /shutdown /unattend:C:/Windows/Temp/Autounattend.xml",
+    "winrm_password" : "packer",
+    "winrm_username" : "Administrator", 
+    "vm_name": "Win10_22h1",
+    "virtio_iso_path" : "../virtio-win-0.1.229.iso"
+  },
+  "builders": [
+    {
+      "type": "qemu",
+      "accelerator": "{{ user `accelerator` }}",
+      "boot_wait": "20s",
+      "communicator": "winrm",
+      "cpus": "{{ user `cpus`}}",
+      "disk_compression": "true",
+      "disk_interface": "virtio",
+      "vm_name": "{{user `vm_name`}}.qcow2",
+      "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "{{user `autounattend`}}",
+        "./scripts/fixnetwork.ps1",
+        "./scripts/install-choco.ps1",
+        "./scripts/install-misc.bat",
+        "./scripts/redhat-cert.cer",
+        "./scripts/redhat-cert-old.cer",
+        "./scripts/enable-winrm.ps1",
+        "./scripts/bios/Firstboot-Autounattend.xml",
+        "./scripts/user-profile.ps1",
+        "./drivers/"
+      ],
+      "format": "qcow2",
+      "headless": "{{user `headless`}}",
+      "iso_checksum": "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "memory": "{{ user `memory_size`}}",
+      "net_device": "virtio-net",
+      "qemuargs": [ [ "-cdrom", "{{user `virtio_iso_path`}}" ], [ "-vga", "qxl" ] ],
+      "shutdown_command": "{{ user `shutdown_command` }}",
+      "winrm_insecure": "true",
+      "winrm_timeout": "120m",
+      "winrm_username": "{{user `winrm_username`}}",
+      "winrm_password": "{{user `winrm_password`}}",
+      "winrm_use_ssl": "true"
+    }
+  ],
+  "provisioners": [
+    {
+      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
+      "remote_path": "c:/Windows/Temp/script.bat",
+      "scripts": [
+        "./scripts/disable-auto-logon.bat",
+        "./scripts/enable-rdp.bat",
+        "./scripts/compile-dotnet-assemblies.bat",
+        "./scripts/install-misc.bat",
+        "./scripts/compact.bat"
+      ],
+      "type": "windows-shell"
+    }
+  ]
+}

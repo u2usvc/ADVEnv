@@ -1,0 +1,6 @@
+TMP
+terraform.tfstate
+bin/
+lib/
+include/
+lib64

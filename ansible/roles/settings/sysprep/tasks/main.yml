@@ -1,0 +1,46 @@
+### The security account manager (SAM) has determined that the security identifier (SID) for this computer is already in use in the Forest you want to join. This can happen when restoring an Active Directory Domain Controller with an improper backup. Reinstall the operating system on the local AD DC to obtain a new SID.
+### Force host into sysprep again to avoid a duplicate SID error
+- name: Copy unattend-generalize.xml for sysprep
+  win_copy:
+    src: ./../../../../scripts/unattend-generalize.xml
+    dest: C:\unattend-generalize.xml
+- name: Copy fix-winrm.ps1
+  win_copy:
+    src: ./../../../../scripts/fix-winrm.ps1
+    dest: C:\fix-winrm.ps1
+
+- name: "Sysprep VM to remove duplicate SID-Problems"
+  win_command: C:\Windows\System32\Sysprep\Sysprep.exe /generalize /oobe /mode:vm /reboot /unattend:unattend-generalize.xml
+  args:
+    chdir: C:\
+
+- name: Wait for the server to shutdown
+  wait_for:
+    host: "{{ ansible_host }}"
+    port: 5985
+    state: stopped
+    timeout: 600
+  delegate_to: localhost
+  vars:
+    ansible_become: false
+
+- name: Wait for the server to reboot
+  wait_for:
+    host: "{{ ansible_host }}"
+    port: 5986
+    state: started
+    timeout: 600
+  delegate_to: localhost
+  vars:
+    ansible_become: false
+
+- name: Wait for connection to become available
+  ansible.builtin.wait_for_connection:
+    delay: 100
+    timeout: 600
+#     
+# - name: Reboot for host changes
+#   win_reboot:
+#     reboot_timeout: 900
+#     post_reboot_delay: 100
+

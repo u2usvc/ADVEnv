@@ -1,0 +1,53 @@
+- name: find domain_adapter
+  set_fact:
+   domain_adapter="{{item.connection_name}}"
+  when: item.ipv4.address == hostvars[dict_key].ansible_host
+  with_items: "{{ ansible_interfaces }}"
+  run_once: true
+
+- name: "Set configure dns to {{dns_domain}}"
+  win_dns_client:
+    adapter_names: "{{domain_adapter}}"
+    ipv4_addresses:
+      - "{{hostvars[dns_domain].ansible_host}}"
+    log_path: C:\dns_log.txt
+
+- name: Install windows features - AD Domain Services
+  win_feature:
+    name: AD-Domain-Services
+    state: present
+    include_management_tools: yes
+  register: features
+
+- name: Install windows features - RSAT-ADDS
+  win_feature:
+    name: RSAT-ADDS
+    state: present
+    include_management_tools: yes
+  register: features
+
+- name: Add child domain to parent domain
+  microsoft.ad.domain_child:
+    dns_domain_name: "{{ domain }}"
+    domain_admin_user: "{{ parent_domain_user }}"
+    domain_admin_password: "{{ parent_domain_password }}"
+    safe_mode_password: "{{ domain_password }}"
+    domain_type: child
+    replication_source_dc: "{{ source_dc }}"
+    sysvol_path: "C:\\Windows\\SYSVOL"
+    database_path: "C:\\Windows\\NTDS"
+    log_path: "C:\\Windows\\Logs"
+    reboot: false
+  register: child_result
+- name: Debug result
+  debug:
+    var: child_result
+
+- name: Reboot
+  win_reboot:
+    reboot_timeout: 900
+    post_reboot_delay: 100
+  when: child_result.changed
+
+- name: ensure ADWS is running
+  ansible.windows.win_shell: Set-Service -Name adws -StartupType Automatic

@@ -1,0 +1,15 @@
+---
+- name: set admin password, set hostname on domain controllers and member workstations
+  hosts:
+    - dc
+    - mw
+  vars_files:
+    - ./config.json
+  gather_facts: false
+  roles:
+  - settings/admin_password
+  - settings/hostname
+  vars:
+    local_admin_password: "{{hosts[dict_key].local_admin_password}}"
+    hostname: "{{hosts[dict_key].hostname}}"
+

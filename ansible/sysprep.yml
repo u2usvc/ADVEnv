@@ -1,0 +1,6 @@
+- name: sysprep the child DCs
+  hosts: child_dc
+  roles:
+    - settings/sysprep
+  vars_files:
+    - ./config.json

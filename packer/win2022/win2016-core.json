@@ -2,11 +2,11 @@
     "variables": {
         "boot_wait": "5s",
         "disk_size": "40960",
-        "iso_checksum": "4f1457c4fe14ce48c9b2324924f33ca4f0470475e6da851b39ccbf98f44e7852",
-        "iso_url": "https://software-download.microsoft.com/download/sg/20348.169.210806-2348.fe_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso",
+        "iso_checksum": "1ce702a578a3cb1ac3d14873980838590f06d5b7101c5daaccbac9d73f1fb50f",
+        "iso_url": "https://software-download.microsoft.com/download/pr/Windows_Server_2016_Datacenter_EVAL_en-us_14393_refresh.ISO",
         "memsize": "6000",
         "numvcpus": "4",
-        "vm_name": "Win2022_20324-Core",
+        "vm_name": "Win2016_14393-Core",
         "winrm_password" : "packer",
         "winrm_username" : "Administrator",
         "virtio_iso_path" : "../virtio-win-0.1.229.iso"
@@ -37,7 +37,7 @@
             "floppy_files": ["scripts/bios/core/autounattend.xml"],
             "shutdown_command": "shutdown /s /t 5 /f /d p:4:1 /c \"Packer Shutdown\"",
             "shutdown_timeout": "30m",
-            "output_directory": "./output-qemu-2022"
+            "output_directory": "./output-qemu-2016"
         }
     ],
     "provisioners": [

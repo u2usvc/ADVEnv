@@ -14,7 +14,8 @@ Requirements: libvirt, QEMU, terraform, ansible, pywinrm
 
 Build golden images:
 ```bash
-cd ./packer/win2022/ && rm -rf output-qemu/ && packer build win2022-core.json
+cd ./packer/win2022/ && rm -rf output-qemu* && packer build win2022-core.json
+packer build win2016-core.json
 cd ./packer/win10/ && rm -rf output-qemu/ && packer build win10.json
 ```
 

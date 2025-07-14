@@ -32,9 +32,10 @@ echo -e "${YELLOW}[X] Passing execution flow to Ansible${NC}"
 echo -e "${YELLOW}###########################################${NC}"
 sleep 4
 cd ./ansible/
+. ./bin/activate
 
 sed -i '/192.168.125.11\|192.168.125.12\|192.168.125.101\|192.168.125.102/d' ~/.ssh/known_hosts
-ansible-playbook -i inventory.ini ./main_imports.yml
+python -m ansible playbook -i inventory.ini ./main_imports.yml
 
 cd ../
 

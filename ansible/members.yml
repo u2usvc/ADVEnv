@@ -1,0 +1,22 @@
+- name: Join SRV
+  hosts: srv
+  roles:
+    - members/join_srv
+  vars_files:
+    - ./config.json
+  vars:
+    member_domain: "{{hosts[dict_key].domain}}"
+    domain_user: "{{admin_user}}@{{member_domain}}"
+    domain_password: "{{domains[member_domain].domain_password}}"
+
+- name: Join MW
+  hosts: mw
+  roles:
+    - members/join_mw
+  vars_files:
+    - ./config.json
+  vars:
+    member_domain: "{{hosts[dict_key].domain}}"
+    domain_user: "{{admin_user}}@{{member_domain}}"
+    domain_password: "{{domains[member_domain].domain_password}}"
+

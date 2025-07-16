@@ -3,3 +3,4 @@
 - import_playbook: initial.yml
 - import_playbook: ad-parent_domain.yml
 - import_playbook: ad-child_domain.yml
+- import_playbook: members.yml

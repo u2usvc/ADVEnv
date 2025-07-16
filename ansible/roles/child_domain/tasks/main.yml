@@ -10,7 +10,6 @@
     adapter_names: "{{domain_adapter}}"
     ipv4_addresses:
       - "{{hostvars[dns_domain].ansible_host}}"
-    log_path: C:\dns_log.txt
 
 - name: Install windows features - AD Domain Services
   win_feature:

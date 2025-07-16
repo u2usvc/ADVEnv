@@ -3,6 +3,7 @@
   hosts:
     - dc
     - mw
+    - srv
   vars_files:
     - ./config.json
   gather_facts: false

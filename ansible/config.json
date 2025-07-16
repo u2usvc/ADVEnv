@@ -34,6 +34,20 @@
       "local_admin_password": "2Mw02-P@$swd",
       "domain" : "ext.local",
       "path" : "DC=ext,DC=local"
+    },
+    "srv01": {
+      "hostname": "WIN-SRV1",
+      "type": "srv",
+      "local_admin_password": "1Srv01-P@$swd",
+      "domain" : "sales.contoso.local",
+      "path" : "DC=sales,DC=contoso,DC=local"
+    },
+    "srv02": {
+      "hostname": "WIN-SRV2",
+      "type": "srv",
+      "local_admin_password": "2Srv02-P@$swd",
+      "domain" : "ext.local",
+      "path" : "DC=ext,DC=local"
     }
   },
 

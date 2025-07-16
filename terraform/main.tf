@@ -21,6 +21,9 @@ provider "libvirt" {
 variable "win2022-core-hosts" {
   default = 3
 }
+variable "win2016-core-hosts" {
+  default = 2
+}
 variable "win10-hosts" {
   default = 2
 }
@@ -28,6 +31,10 @@ variable "win10-hosts" {
 variable "hostname_format-win-srv-2022" {
   type    = string
   default = "win-srv-2022-%02d"
+}
+variable "hostname_format-win-srv-2016" {
+  type    = string
+  default = "win-srv-2016-%02d"
 }
 variable "hostname_format-win-10" {
   type    = string
@@ -51,13 +58,6 @@ variable "hostname_format-win-10" {
 # }
 
 # separate MAC definitions to ensure correct IP assignment
-variable "mac_addresses_win10" {
-  type    = list(string)
-  default = [
-    "50:73:0F:31:81:D1",
-    "50:73:0F:31:81:D2",
-  ]
-}
 variable "mac_addresses_win2022" {
   type    = list(string)
   default = [
@@ -69,9 +69,32 @@ variable "mac_addresses_win2022" {
 variable "ip_addresses_2022" {
   type    = list(list(string))
   default = [
-    ["192.168.125.11"],
-    ["192.168.125.12"],
-    ["192.168.125.13"],
+    ["192.168.125.11"], # dc01
+    ["192.168.125.13"], # dc03
+    ["192.168.125.21"], # srv01
+  ]
+}
+
+variable "mac_addresses_win2016" {
+  type    = list(string)
+  default = [
+    "50:73:0F:31:81:B1",
+    "50:73:0F:31:81:B2",
+  ]
+}
+variable "ip_addresses_2016" {
+  type    = list(list(string))
+  default = [
+    ["192.168.125.12"], # dc02
+    ["192.168.125.22"], # srv02
+  ]
+}
+
+variable "mac_addresses_win10" {
+  type    = list(string)
+  default = [
+    "50:73:0F:31:81:D1",
+    "50:73:0F:31:81:D2",
   ]
 }
 variable "ip_addresses_10" {
@@ -177,7 +200,16 @@ resource "libvirt_pool" "advenv_pool" {
 resource "libvirt_volume" "win2022-core_vol" {
   name   = "${format(var.hostname_format-win-srv-2022, count.index + 1)}.qcow2"
   count  = var.win2022-core-hosts
-  source = "../packer/win2022/output-qemu/Win2022_20324-Core.qcow2"
+  source = "../packer/win-srv/output-qemu-2022/Win2022_20324-Core.qcow2"
+  pool   = "advenv_pool"
+  format = "qcow2"
+  # fix the bug that doesn't allow to destroy a pool
+  depends_on       = [libvirt_pool.advenv_pool]
+}
+resource "libvirt_volume" "win2016-core_vol" {
+  name   = "${format(var.hostname_format-win-srv-2016, count.index + 1)}.qcow2"
+  count  = var.win2016-core-hosts
+  source = "../packer/win-srv/output-qemu-2016/Win2016_14393-Core.qcow2"
   pool   = "advenv_pool"
   format = "qcow2"
   # fix the bug that doesn't allow to destroy a pool
@@ -192,5 +224,3 @@ resource "libvirt_volume" "win-10_vol" {
   # fix the bug that doesn't allow to destroy a pool
   depends_on       = [libvirt_pool.advenv_pool]
 }
-
-

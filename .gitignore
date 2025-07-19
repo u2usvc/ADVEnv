@@ -1,4 +1,4 @@
 DEV_README.md
 terraform.tfstate
-**/.terraform
-**/terraform/
+**/terraform.tfstate.backup
+**/.terraform*

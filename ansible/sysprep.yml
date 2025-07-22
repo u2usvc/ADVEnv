@@ -1,5 +1,5 @@
 - name: sysprep the child DCs
-  hosts: child_dc
+  hosts: sysprep
   roles:
     - settings/sysprep
   vars_files:

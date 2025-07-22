@@ -9,9 +9,12 @@ Planned integrations:
 - SCCM
 - ADFS
 
-## Usage
-Requirements: libvirt, QEMU, terraform, ansible, pywinrm
+## Prerequisites
+1. terraform, libvirt and qemu should be installed.
+2. `libvirtd` should be running.
+3. ensure your user is a member of `libvirt` group
 
+## Usage
 Build golden images:
 ```bash
 cd ./packer/win2022/ && rm -rf output-qemu* && packer build win2022-core.json
@@ -30,6 +33,7 @@ cd ansible
 python -m venv ./
 . ./bin/activate
 pip install pywinrm
+pip install ansible
 ```
 
 Run the setup script (make sure to remove `terraform.tfstate` and `terraform.tfstate.backup` beforehand, if any):

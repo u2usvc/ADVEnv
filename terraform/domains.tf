@@ -1,7 +1,7 @@
 resource "libvirt_domain" "win-srv-2022" {
   count  = var.win2022-core-hosts
   name   = format(var.hostname_format-win-srv-2022, count.index + 1)
-  vcpu   = 3
+  vcpu   = 2
   memory  = 5000
 
   cpu {
@@ -62,6 +62,8 @@ resource "libvirt_domain" "win-des-10" {
   cpu {
       mode = "host-passthrough"
     }
+  vcpu   = 2
+  memory  = 7000
 
   disk {
     volume_id = element(libvirt_volume.win-10_vol.*.id, count.index)

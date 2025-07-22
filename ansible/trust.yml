@@ -1,0 +1,13 @@
+- name: Establish a transitive bidirectional forest trust to allow lateral movement
+  hosts: trust
+  roles:
+    - trust
+  vars_files:
+    - ./config.json
+  vars:
+    domain: "{{hosts[dict_key].domain}}"
+    domain_username: "{{domain}}\\{{admin_user}}"
+    domain_password: "{{domains[domain].domain_password}}"
+    remote_forest: "{{domains[domain].trust}}"
+    remote_admin: "Administrator@{{remote_forest}}"
+    remote_admin_password: "{{domains[remote_forest].domain_password}}"

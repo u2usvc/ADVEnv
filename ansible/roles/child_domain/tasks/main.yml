@@ -10,6 +10,7 @@
     adapter_names: "{{domain_adapter}}"
     ipv4_addresses:
       - "{{hostvars[dns_domain].ansible_host}}"
+    log_path: C:\dns_log.txt
 
 - name: Install windows features - AD Domain Services
   win_feature:
@@ -36,17 +37,12 @@
     sysvol_path: "C:\\Windows\\SYSVOL"
     database_path: "C:\\Windows\\NTDS"
     log_path: "C:\\Windows\\Logs"
-    reboot: false
+    reboot: true
+    reboot_timeout: 900
   register: child_result
 - name: Debug result
   debug:
     var: child_result
-
-- name: Reboot
-  win_reboot:
-    reboot_timeout: 900
-    post_reboot_delay: 100
-  when: child_result.changed
 
 - name: ensure ADWS is running
   ansible.windows.win_shell: Set-Service -Name adws -StartupType Automatic

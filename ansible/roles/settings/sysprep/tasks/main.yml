@@ -13,16 +13,16 @@
   win_command: C:\Windows\System32\Sysprep\Sysprep.exe /generalize /oobe /mode:vm /reboot /unattend:unattend-generalize.xml
   args:
     chdir: C:\
-
-- name: Wait for the server to shutdown
-  wait_for:
-    host: "{{ ansible_host }}"
-    port: 5985
-    state: stopped
-    timeout: 600
-  delegate_to: localhost
-  vars:
-    ansible_become: false
+ 
+# - name: Wait for the server to shutdown
+#   wait_for:
+#     host: "{{ ansible_host }}"
+#     port: 5985
+#     state: drained
+#     timeout: 600
+#   delegate_to: localhost
+#   vars:
+#     ansible_become: false
 
 - name: Wait for the server to reboot
   wait_for:

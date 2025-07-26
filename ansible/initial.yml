@@ -8,9 +8,9 @@
     - ./config.json
   gather_facts: false
   roles:
-  - settings/admin_password
-  - settings/hostname
+    - settings/admin_password
+    - settings/hostname
+    - settings/choco
   vars:
     local_admin_password: "{{hosts[dict_key].local_admin_password}}"
     hostname: "{{hosts[dict_key].hostname}}"
-

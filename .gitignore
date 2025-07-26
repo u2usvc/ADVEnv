@@ -2,3 +2,11 @@ DEV_README.md
 terraform.tfstate
 **/terraform.tfstate.backup
 **/.terraform*
+**/TMP
+**/terraform.tfstate
+**/bin/
+**/lib/
+**/include/
+**/lib64
+**/pyvenv.cfg
+**/.yamllint.yml

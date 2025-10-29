@@ -50,11 +50,10 @@
     {
       "type": "proxmox-iso",
       "proxmox_url": "{{user `proxmox_url`}}",
-      "insecure_skip_tls_verify": true,
+      "insecure_skip_tls_verify": "{{user `insecure_skip_tls_verify`}}",
       "username": "{{user `proxmox_token_id`}}",
       "token": "{{user `proxmox_token_secret`}}",
       "node": "{{user `proxmox_node`}}",
-      "vm_id": 9000,
       "vm_name": "{{user `vm_name`}}",
       "memory": "{{user `memsize`}}",
       "cores": "{{user `numvcpus`}}",

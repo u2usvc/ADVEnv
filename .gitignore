@@ -10,3 +10,4 @@ terraform.tfstate
 **/lib64
 **/pyvenv.cfg
 **/.yamllint.yml
+**/vars.pkrvars.json

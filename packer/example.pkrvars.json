@@ -5,5 +5,5 @@
   "proxmox_node": "pve",
   "proxmox_storage": "local-lvm",
   "proxmox_iso_storage": "local",
-  "insecure_skip_tls_verify": false
+  "insecure_skip_tls_verify": "false"
 }

@@ -58,6 +58,7 @@
       "memory": "{{user `memsize`}}",
       "cores": "{{user `numvcpus`}}",
       "os": "win10",
+      "tags": "advenv",
       "machine": "q35",
       "scsi_controller": "virtio-scsi-single",
       "network_adapters": [

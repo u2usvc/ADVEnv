@@ -55,6 +55,7 @@
       "node": "{{user `proxmox_node`}}",
       "vm_name": "{{user `vm_name`}}",
       "memory": "{{user `memsize`}}",
+      "tags": "advenv",
       "cores": "{{user `numvcpus`}}",
       "os": "win10",
       "insecure_skip_tls_verify": "{{user `insecure_skip_tls_verify`}}",

@@ -11,3 +11,4 @@ terraform.tfstate
 **/pyvenv.cfg
 **/.yamllint.yml
 **/vars.pkrvars.json
+**/.env

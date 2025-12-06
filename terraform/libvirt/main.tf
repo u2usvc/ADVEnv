@@ -4,7 +4,7 @@
 terraform {
   required_providers {
     libvirt = {
-      source = "dmacvicar/libvirt"
+      source  = "dmacvicar/libvirt"
       version = "0.8.3"
     }
   }
@@ -59,7 +59,7 @@ variable "hostname_format-win-10" {
 
 # separate MAC definitions to ensure correct IP assignment
 variable "mac_addresses_win2022" {
-  type    = list(string)
+  type = list(string)
   default = [
     "50:73:0F:31:81:A1",
     "50:73:0F:31:81:A2",
@@ -67,7 +67,7 @@ variable "mac_addresses_win2022" {
   ]
 }
 variable "ip_addresses_2022" {
-  type    = list(list(string))
+  type = list(list(string))
   default = [
     ["192.168.125.11"], # dc01
     ["192.168.125.13"], # dc03
@@ -76,14 +76,14 @@ variable "ip_addresses_2022" {
 }
 
 variable "mac_addresses_win2016" {
-  type    = list(string)
+  type = list(string)
   default = [
     "50:73:0F:31:81:B1",
     "50:73:0F:31:81:B2",
   ]
 }
 variable "ip_addresses_2016" {
-  type    = list(list(string))
+  type = list(list(string))
   default = [
     ["192.168.125.12"], # dc02
     ["192.168.125.22"], # srv02
@@ -91,27 +91,19 @@ variable "ip_addresses_2016" {
 }
 
 variable "mac_addresses_win10" {
-  type    = list(string)
+  type = list(string)
   default = [
     "50:73:0F:31:81:D1",
     "50:73:0F:31:81:D2",
   ]
 }
 variable "ip_addresses_10" {
-  type    = list(list(string))
+  type = list(list(string))
   default = [
     ["192.168.125.101"],
     ["192.168.125.102"],
   ]
 }
-
-# variable "hostnames" {
-#   type    = list(string)
-#   default = [
-#     "WIN-DC1",
-#     "WIN-DC2"
-#   ]
-# }
 
 
 #################################
@@ -204,7 +196,7 @@ resource "libvirt_volume" "win2022-core_vol" {
   pool   = "advenv_pool"
   format = "qcow2"
   # fix the bug that doesn't allow to destroy a pool
-  depends_on       = [libvirt_pool.advenv_pool]
+  depends_on = [libvirt_pool.advenv_pool]
 }
 resource "libvirt_volume" "win2016-core_vol" {
   name   = "${format(var.hostname_format-win-srv-2016, count.index + 1)}.qcow2"
@@ -213,7 +205,7 @@ resource "libvirt_volume" "win2016-core_vol" {
   pool   = "advenv_pool"
   format = "qcow2"
   # fix the bug that doesn't allow to destroy a pool
-  depends_on       = [libvirt_pool.advenv_pool]
+  depends_on = [libvirt_pool.advenv_pool]
 }
 resource "libvirt_volume" "win-10_vol" {
   name   = "${format(var.hostname_format-win-10, count.index + 1)}.qcow2"
@@ -222,5 +214,5 @@ resource "libvirt_volume" "win-10_vol" {
   pool   = "advenv_pool"
   format = "qcow2"
   # fix the bug that doesn't allow to destroy a pool
-  depends_on       = [libvirt_pool.advenv_pool]
+  depends_on = [libvirt_pool.advenv_pool]
 }

@@ -8,6 +8,7 @@
     "numvcpus": "4",
     "vm_name": "WIN-SRV2022",
     "proxmox_disk_size": "40G",
+    "vm_id": 48453,
     "winrm_password": "packer",
     "winrm_username": "Administrator",
     "virtio_iso_path": "../virtio-win-0.1.229.iso"

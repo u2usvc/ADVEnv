@@ -43,14 +43,6 @@ variable "mac_addresses_win2022" {
     "50:73:0F:31:81:A3",
   ]
 }
-variable "ip_addresses_2022" {
-  type = list(list(string))
-  default = [
-    ["192.168.125.11"], # dc01
-    ["192.168.125.13"], # dc03
-    ["192.168.125.21"], # srv01
-  ]
-}
 
 variable "mac_addresses_win2016" {
   type = list(string)
@@ -59,25 +51,11 @@ variable "mac_addresses_win2016" {
     "50:73:0F:31:81:B2",
   ]
 }
-variable "ip_addresses_2016" {
-  type = list(list(string))
-  default = [
-    ["192.168.125.12"], # dc02
-    ["192.168.125.22"], # srv02
-  ]
-}
 
 variable "mac_addresses_win10" {
   type = list(string)
   default = [
     "50:73:0F:31:81:D1",
     "50:73:0F:31:81:D2",
-  ]
-}
-variable "ip_addresses_10" {
-  type = list(list(string))
-  default = [
-    ["192.168.125.101"],
-    ["192.168.125.102"],
   ]
 }

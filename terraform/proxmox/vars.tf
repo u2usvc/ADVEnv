@@ -8,11 +8,6 @@ variable "bridge" {
   default = "vmbr0"
 }
 
-variable "vm_id_start" {
-  type    = number
-  default = 1110
-}
-
 variable "win2022-core-hosts" {
   type    = number
   default = 3

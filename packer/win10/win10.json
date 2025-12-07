@@ -14,6 +14,7 @@
     "winrm_password": "packer",
     "winrm_username": "Administrator",
     "vm_name": "DESKTOP-WIN10",
+    "vm_id": 48451,
     "virtio_iso_path": "../virtio-win-0.1.229.iso",
     "proxmox_disk_size": "40G"
   },

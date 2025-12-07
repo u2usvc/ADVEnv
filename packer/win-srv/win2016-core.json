@@ -8,6 +8,7 @@
     "memsize": "6000",
     "numvcpus": "4",
     "vm_name": "WIN-SRV2016",
+    "vm_id": 48452,
     "winrm_password": "packer",
     "winrm_username": "Administrator",
     "virtio_iso_path": "../virtio-win-0.1.229.iso"
